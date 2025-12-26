@@ -142,12 +142,7 @@ void AdaptiveEKF::update_with_odom(double v, double w, bool slipping)
 void AdaptiveEKF::gps_callback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
 {
 
-    if (std::abs(msg->latitude) < 1e-6 && std::abs(msg->longitude) < 1e-6) {
-        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 5000, 
-            "GPS is reporting 0.0! Ignoring this message.");
-        return;
-    }
-    
+
     if (!first_fix_) {
         origin_lat_ = msg->latitude;
         origin_lon_ = msg->longitude;

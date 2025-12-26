@@ -13,6 +13,7 @@ def generate_launch_description():
 
     urdf_file = os.path.join(pkg_path, 'urdf', 'my_bot.urdf')
     ice_sdf = os.path.join(pkg_path, 'models', 'ice_patch', 'ice_patch.sdf')
+    world_path = os.path.join(pkg_path, 'worlds', 'antarctic.sdf')
 
     set_prime_offload = SetEnvironmentVariable(name='__NV_PRIME_RENDER_OFFLOAD', value='1')
     set_glx_vendor = SetEnvironmentVariable(name='__GLX_VENDOR_LIBRARY_NAME', value='nvidia')
@@ -31,7 +32,7 @@ def generate_launch_description():
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')]),
-        launch_arguments={'gz_args': '-r empty.sdf'}.items()
+        launch_arguments={'gz_args': f'-r {world_path}'}.items()
     )
 
     spawn_robot = Node(
